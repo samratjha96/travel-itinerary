@@ -6,6 +6,7 @@
 <title>Vietnam · July 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -315,6 +316,20 @@ a.inline-link:hover { border-bottom-style: solid; }
 .decide-note { font-size: 12px; color: var(--light); margin-top: 12px; font-style: italic; }
 @media (max-width: 820px) { .decide-box { grid-template-columns: 1fr; } }
 
+/* ── MAP ── */
+.map-section { background: var(--sand); }
+#trip-map {
+  height: 540px; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.12); margin-top: 40px;
+}
+.map-legend {
+  display: flex; gap: 20px; flex-wrap: wrap;
+  margin-top: 18px; font-size: 13px; color: var(--mid);
+}
+.leg-item { display: flex; align-items: center; gap: 7px; }
+.leg-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.map-note { font-size: 12px; color: var(--light); margin-top: 10px; font-style: italic; }
+
 /* ── FOOTER ── */
 footer { background: var(--green); text-align: center; padding: 28px; font-size: 13px; color: rgba(255,255,255,0.35); }
 footer span { color: rgba(255,255,255,0.65); }
@@ -566,6 +581,29 @@ footer span { color: rgba(255,255,255,0.65); }
   </div>
 </section>
 
+<!-- MAP -->
+<section class="section map-section">
+  <div class="container">
+    <p class="label">The Route</p>
+    <h2 class="h2">Where Everything Is</h2>
+    <p class="lead">The trip runs north along Vietnam's central coast. Every ground transfer is under 4 hours. Click any pin for details.</p>
+    <div id="trip-map"></div>
+    <div class="map-legend">
+      <div class="leg-item"><div class="leg-dot" style="background:#2d6e47"></div> Jungle</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#1a6b8a"></div> Beach</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#7b4bb8"></div> Caves (Option B)</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#888"></div> Arrival / Departure</div>
+      <div class="leg-item">
+        <svg width="30" height="10"><line x1="0" y1="5" x2="30" y2="5" stroke="#2d6e47" stroke-width="2"/></svg> Ground
+      </div>
+      <div class="leg-item">
+        <svg width="30" height="10"><line x1="0" y1="5" x2="30" y2="5" stroke="#2d6e47" stroke-width="2" stroke-dasharray="5,4"/></svg> Flight
+      </div>
+    </div>
+    <p class="map-note">Note: Cat Tien → Nha Trang involves a return to HCMC before the flight north. The dashed arc represents this flight leg.</p>
+  </div>
+</section>
+
 <!-- ITINERARY -->
 <section class="section itin-section">
   <div class="container">
@@ -741,5 +779,110 @@ footer span { color: rgba(255,255,255,0.65); }
   <span>Vietnam · July 2026</span> &nbsp;·&nbsp; Prepared March 2026 &nbsp;·&nbsp; All prices in USD, estimates only
 </footer>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function() {
+  var map = L.map('trip-map', {
+    center: [13.8, 108.0],
+    zoom: 6,
+    scrollWheelZoom: false,
+    zoomControl: true
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+    maxZoom: 19
+  }).addTo(map);
+
+  function pinIcon(label, bg) {
+    return L.divIcon({
+      className: '',
+      html: '<div style="background:' + bg + ';width:34px;height:34px;border-radius:50%;border:3px solid white;box-shadow:0 2px 10px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;font-family:Inter,sans-serif;">' + label + '</div>',
+      iconSize: [34, 34],
+      iconAnchor: [17, 17],
+      popupAnchor: [0, -20]
+    });
+  }
+
+  var stops = [
+    {
+      label: '✈', color: '#888',
+      coords: [10.8231, 106.6297],
+      name: 'Ho Chi Minh City',
+      detail: 'Arrival · Night 1<br>Land, sleep near airport. Early start for Cat Tien next morning.'
+    },
+    {
+      label: '1', color: '#2d6e47',
+      coords: [11.4167, 107.4167],
+      name: 'Cat Tien National Park',
+      detail: '🌿 Jungle · Nights 2–3<br>3 hr drive from HCMC. Gibbons at dawn, night safari, primate rescue centre.'
+    },
+    {
+      label: '2', color: '#1a6b8a',
+      coords: [12.2388, 109.1967],
+      name: 'Nha Trang',
+      detail: '🏖️ Beach · Nights 4–5<br>1 hr flight from HCMC. Dive Hon Mun, Doc Let beach, dam market seafood.'
+    },
+    {
+      label: '3', color: '#1a6b8a',
+      coords: [13.7829, 109.2196],
+      name: 'Quy Nhon & Ky Co Beach',
+      detail: '🏖️ Beach · Nights 6–8<br>3 hr bus north. Ky Co only by boat — turquoise water, zero crowds.'
+    },
+    {
+      label: '4', color: '#1a6b8a',
+      coords: [15.8801, 108.3380],
+      name: 'Hoi An',
+      detail: '🏖️ Beach + Town · Nights 9–10 (A) or Night 9 (B)<br>3.5 hr bus. An Bang beach + Ancient Town by bike at dawn.'
+    },
+    {
+      label: 'B', color: '#7b4bb8',
+      coords: [17.5756, 106.2903],
+      name: 'Phong Nha',
+      detail: '🕳️ Caves · Nights 10–11 — Option B only<br>3.5 hr bus northwest. Dark Cave, Hang En overnight trek (~$200pp, book ahead).'
+    },
+    {
+      label: '✈', color: '#888',
+      coords: [16.0544, 108.2022],
+      name: 'Da Nang',
+      detail: 'Departure<br>30 min Grab from Hoi An (Option A) or 3.5 hr bus from Phong Nha (Option B).'
+    }
+  ];
+
+  stops.forEach(function(s) {
+    L.marker(s.coords, { icon: pinIcon(s.label, s.color) })
+      .addTo(map)
+      .bindPopup(
+        '<div style="font-family:Inter,sans-serif;min-width:200px">' +
+        '<strong style="font-size:14px;color:#0d2b1a">' + s.name + '</strong><br>' +
+        '<span style="font-size:12px;color:#666;line-height:1.6">' + s.detail + '</span>' +
+        '</div>',
+        { maxWidth: 240 }
+      );
+  });
+
+  // Ground route – Option A (solid green)
+  var groundSegments = [
+    [[10.8231, 106.6297], [11.4167, 107.4167]],  // HCMC → Cat Tien
+    [[11.4167, 107.4167], [10.8231, 106.6297]],  // Cat Tien → HCMC (return for flight)
+    [[12.2388, 109.1967], [13.7829, 109.2196]],  // Nha Trang → Quy Nhon
+    [[13.7829, 109.2196], [15.8801, 108.3380]],  // Quy Nhon → Hoi An
+    [[15.8801, 108.3380], [16.0544, 108.2022]]   // Hoi An → Da Nang (Option A)
+  ];
+  groundSegments.forEach(function(seg) {
+    L.polyline(seg, { color: '#2d6e47', weight: 2.5, opacity: 0.55 }).addTo(map);
+  });
+
+  // Flight leg HCMC → Nha Trang (dashed)
+  L.polyline([[10.8231, 106.6297], [12.2388, 109.1967]], {
+    color: '#2d6e47', weight: 2, opacity: 0.5, dashArray: '6 8'
+  }).addTo(map);
+
+  // Option B extension: Hoi An → Phong Nha → Da Nang (purple dashed)
+  L.polyline([[15.8801, 108.3380], [17.5756, 106.2903], [16.0544, 108.2022]], {
+    color: '#7b4bb8', weight: 2, opacity: 0.5, dashArray: '5 6'
+  }).addTo(map);
+})();
+</script>
 </body>
 </html>
