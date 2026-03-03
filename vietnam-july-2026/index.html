@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vietnam · July 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green:       #0d2b1a;
+  --green-mid:   #1a4a2e;
+  --green-light: #2d6e47;
+  --sand:        #f7edd8;
+  --sand-dark:   #e8d5b0;
+  --ocean:       #1a6b8a;
+  --ocean-light: #2a9bc7;
+  --amber:       #c97a10;
+  --amber-light: #f0a030;
+  --off-white:   #faf8f4;
+  --dark:        #111;
+  --mid:         #444;
+  --light:       #888;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: var(--off-white); color: var(--dark); line-height: 1.6; }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 580px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 72px;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1654930454016-d05a25c6c7f6?w=1800&q=85&fit=crop&auto=format');
+  background-size: cover;
+  background-position: center 50%;
+  filter: brightness(0.5);
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.05) 55%);
+}
+.hero-content {
+  position: relative; z-index: 2;
+  max-width: 1100px; margin: 0 auto;
+  padding: 0 48px; width: 100%;
+}
+.eyebrow {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--amber-light); margin-bottom: 14px;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(72px, 11vw, 130px);
+  font-weight: 900; color: white;
+  line-height: 0.88; letter-spacing: -3px;
+  margin-bottom: 22px;
+}
+.hero-sub {
+  font-size: 18px; font-weight: 300;
+  color: rgba(255,255,255,0.78);
+  max-width: 500px; line-height: 1.75;
+}
+.hero-chips {
+  display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap;
+}
+.chip {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.22);
+  color: white; font-size: 12px; font-weight: 500;
+  letter-spacing: 0.06em; padding: 7px 14px; border-radius: 100px;
+  backdrop-filter: blur(6px);
+}
+.scroll-cue {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%); z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: rgba(255,255,255,0.4); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px; height: 36px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:.9} }
+
+/* ── SHARED ── */
+.section { padding: 96px 48px; }
+.container { max-width: 1100px; margin: 0 auto; }
+.label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--amber); margin-bottom: 14px;
+}
+.h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(30px, 4.5vw, 50px);
+  font-weight: 700; line-height: 1.1; color: var(--green); margin-bottom: 18px;
+}
+.lead { font-size: 17px; color: var(--mid); max-width: 620px; line-height: 1.78; }
+
+/* ── WEATHER STRIP ── */
+.weather {
+  background: var(--green); padding: 28px 48px;
+}
+.weather .container { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+.weather-ico { font-size: 36px; flex-shrink: 0; }
+.weather strong { font-size: 14px; font-weight: 600; color: var(--amber-light); display: block; margin-bottom: 4px; }
+.weather p { font-size: 14px; color: rgba(255,255,255,0.72); line-height: 1.65; max-width: 720px; }
+
+/* ── OPTIONS CARDS ── */
+.options { background: var(--off-white); }
+.options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 52px; }
+.opt-card {
+  background: white; border-radius: 18px; overflow: hidden;
+  box-shadow: 0 2px 24px rgba(0,0,0,0.07);
+  transition: transform .25s, box-shadow .25s;
+}
+.opt-card:hover { transform: translateY(-4px); box-shadow: 0 10px 40px rgba(0,0,0,0.11); }
+.opt-img { width: 100%; height: 240px; object-fit: cover; display: block; }
+.opt-body { padding: 28px 30px; }
+.opt-tag {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 4px 11px; border-radius: 100px; margin-bottom: 14px;
+}
+.tag-a { background: #e6f5ee; color: var(--green-light); }
+.tag-b { background: #e6f0f7; color: var(--ocean); }
+.opt-name { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--green); margin-bottom: 6px; }
+.opt-nights { font-size: 12px; font-weight: 600; color: var(--light); letter-spacing: 0.06em; margin-bottom: 14px; }
+.opt-desc { font-size: 14px; color: var(--mid); line-height: 1.72; margin-bottom: 20px; }
+.pills { display: flex; flex-wrap: wrap; gap: 7px; }
+.pill {
+  font-size: 12px; font-weight: 500; padding: 4px 11px;
+  border-radius: 100px; border: 1px solid var(--sand-dark);
+  color: var(--mid); background: var(--sand);
+}
+.pill-j { background: #e6f5ee; border-color: #b5dcc5; color: var(--green-light); }
+.pill-b { background: #e4f1f8; border-color: #a5cfe8; color: var(--ocean); }
+.pill-c { background: #f0e8f8; border-color: #c8a8ee; color: #6b3a9e; }
+
+/* ── DESTINATIONS ── */
+.dests { background: white; }
+.dest-list { display: flex; flex-direction: column; gap: 88px; margin-top: 64px; }
+.dest {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px; align-items: center;
+}
+.dest.flip { direction: rtl; }
+.dest.flip > * { direction: ltr; }
+
+/* Photo mosaic */
+.photos { position: relative; height: 420px; }
+.photo-main {
+  position: absolute; top: 0; left: 0;
+  width: 76%; height: 78%;
+  object-fit: cover; border-radius: 14px;
+  box-shadow: 0 6px 36px rgba(0,0,0,0.14);
+}
+.photo-accent {
+  position: absolute; bottom: 0; right: 0;
+  width: 50%; height: 50%;
+  object-fit: cover; border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+  border: 4px solid white;
+}
+
+/* Dest text */
+.dest-env {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.env-j { color: var(--green-light); }
+.env-b { color: var(--ocean); }
+.env-c { color: #7b4bb8; }
+
+.dest-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 34px; font-weight: 700; color: var(--green);
+  line-height: 1.1; margin-bottom: 5px;
+}
+.dest-region { font-size: 12px; color: var(--light); letter-spacing: 0.07em; margin-bottom: 18px; }
+.dest-desc { font-size: 15px; color: var(--mid); line-height: 1.82; margin-bottom: 24px; }
+
+.bullets { display: flex; flex-direction: column; gap: 9px; margin-bottom: 24px; }
+.bullet { display: flex; gap: 10px; font-size: 13px; color: var(--mid); }
+.dot { width: 5px; height: 5px; border-radius: 50%; background: var(--amber); margin-top: 6px; flex-shrink: 0; }
+
+.facts { display: flex; gap: 12px; flex-wrap: wrap; }
+.fact {
+  background: var(--off-white); border-radius: 9px;
+  padding: 10px 14px; font-size: 12px;
+}
+.fact-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--green); display: block; margin-bottom: 2px;
+}
+.fact-val { color: var(--mid); }
+
+/* Only-B badge */
+.only-b {
+  display: inline-block; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 2px 9px; border-radius: 100px;
+  background: #ede8f8; color: #7b4bb8; margin-left: 8px;
+  vertical-align: middle;
+}
+
+/* ── ITINERARY ── */
+.itin-section { background: var(--green); }
+.itin-section .h2 { color: white; }
+.itin-section .lead { color: rgba(255,255,255,0.65); }
+.itin-section .label { color: var(--amber-light); }
+
+.itin-block { margin-top: 40px; }
+.itin-block-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 20px;
+}
+.itin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+  gap: 12px; margin-bottom: 48px;
+}
+.iday {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 12px; padding: 18px;
+  transition: background .2s;
+}
+.iday:hover { background: rgba(255,255,255,0.1); }
+.iday-n { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 7px; }
+.iday-place { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: white; margin-bottom: 3px; }
+.iday-type { font-size: 11px; color: rgba(255,255,255,0.45); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+.iday-notes { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+.idot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.d-j { background: #5aba84; }
+.d-b { background: #4ab3d4; }
+.d-c { background: #b07fe0; }
+.d-t { background: rgba(255,255,255,0.25); }
+
+/* ── TRANSIT ── */
+.transit-section { background: var(--sand); }
+.transit-table {
+  width: 100%; border-collapse: collapse; margin-top: 40px;
+  background: white; border-radius: 14px; overflow: hidden;
+  box-shadow: 0 2px 18px rgba(0,0,0,0.06);
+}
+.transit-table th {
+  background: var(--green); color: white;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; padding: 14px 22px; text-align: left;
+}
+.transit-table td { padding: 14px 22px; font-size: 14px; color: var(--mid); border-bottom: 1px solid var(--sand); }
+.transit-table tr:last-child td { border-bottom: none; }
+.transit-table tr:nth-child(even) td { background: var(--off-white); }
+.cost { background: var(--sand); color: var(--amber); font-weight: 600; padding: 2px 9px; border-radius: 100px; font-size: 12px; white-space: nowrap; }
+
+/* ── BOOK EARLY ── */
+.book-section { background: white; text-align: center; }
+.book-section .h2 { margin: 0 auto 16px; }
+.book-section .lead { margin: 0 auto 40px; text-align: center; }
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px; max-width: 920px; margin: 0 auto;
+}
+.book-card {
+  background: var(--off-white); border: 1.5px solid var(--sand-dark);
+  border-radius: 12px; padding: 22px; text-align: left;
+}
+.book-urg { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); margin-bottom: 7px; }
+.book-item { font-size: 15px; font-weight: 600; color: var(--green); margin-bottom: 6px; }
+.book-why { font-size: 13px; color: var(--light); line-height: 1.55; }
+
+/* ── FOOTER ── */
+footer { background: var(--green); text-align: center; padding: 28px; font-size: 13px; color: rgba(255,255,255,0.35); }
+footer span { color: rgba(255,255,255,0.65); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 820px) {
+  .section { padding: 60px 24px; }
+  .hero-content { padding: 0 24px; }
+  .options-grid { grid-template-columns: 1fr; }
+  .dest, .dest.flip { grid-template-columns: 1fr; direction: ltr; }
+  .photos { height: 280px; }
+  .weather { padding: 22px 24px; }
+  .transit-table th, .transit-table td { padding: 11px 14px; font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="eyebrow">A Two-Week Journey · July 2026</p>
+    <h1 class="hero-title">Vietnam</h1>
+    <p class="hero-sub">Rainforest, coastline, and cave systems — a route built around July's best weather.</p>
+    <div class="hero-chips">
+      <span class="chip">🌿 Jungle</span>
+      <span class="chip">🏖️ Beach</span>
+      <span class="chip">🕳️ Caves</span>
+      <span class="chip">10 or 11 Nights</span>
+      <span class="chip">Fly HCMC in · Da Nang out</span>
+    </div>
+  </div>
+  <div class="scroll-cue"><div class="scroll-line"></div>Scroll</div>
+</section>
+
+<!-- WEATHER NOTE -->
+<div class="weather">
+  <div class="container">
+    <div class="weather-ico">☀️</div>
+    <div>
+      <strong>Why July works — and where most guides get it wrong</strong>
+      <p>Everyone says "avoid Vietnam in July, it's rainy season." That misses the point. The central coast — Nha Trang, Quy Nhon, Hoi An — sits in near-dry season in July, with 7–9 hours of sunshine daily. Nha Trang is surrounded by mountains that physically block the monsoon: less than 10mm of rain the entire month. This itinerary stays in that window the whole time.</p>
+    </div>
+  </div>
+</div>
+
+<!-- THE TWO OPTIONS -->
+<section class="section options">
+  <div class="container">
+    <p class="label">Your Itinerary</p>
+    <h2 class="h2">Two Ways to Do This Trip</h2>
+    <p class="lead">Both start in Ho Chi Minh City and end in Da Nang. Option B adds Phong Nha — UNESCO caves and jungle unlike anything else in Southeast Asia — for one extra night.</p>
+
+    <div class="options-grid">
+      <!-- A -->
+      <div class="opt-card">
+        <img class="opt-img" src="https://static.vinwonders.com/production/Ky-Co-Beach-banner.jpg" alt="Quy Nhon Ky Co beach Vietnam">
+        <div class="opt-body">
+          <span class="opt-tag tag-a">Option A</span>
+          <h3 class="opt-name">Jungle &amp; Coast</h3>
+          <p class="opt-nights">10 Nights · Ho Chi Minh City → Da Nang</p>
+          <p class="opt-desc">Wildlife in the south, then a steady drift up the central coast through Vietnam's best and least-crowded beaches. Unhurried — every stop earns its place.</p>
+          <div class="pills">
+            <span class="pill pill-j">🌿 Cat Tien</span>
+            <span class="pill pill-b">🏖️ Nha Trang</span>
+            <span class="pill pill-b">🏖️ Quy Nhon</span>
+            <span class="pill pill-b">🏖️ Hoi An</span>
+          </div>
+        </div>
+      </div>
+      <!-- B -->
+      <div class="opt-card">
+        <img class="opt-img" src="https://cdn.audleytravel.com/4209/3006/79/15977771-phong-nha-cave.jpg" alt="Phong Nha cave Vietnam">
+        <div class="opt-body">
+          <span class="opt-tag tag-b">Option B</span>
+          <h3 class="opt-name">Jungle, Coast &amp; Caves</h3>
+          <p class="opt-nights">11 Nights · Ho Chi Minh City → Da Nang</p>
+          <p class="opt-desc">Everything in A, plus a finale at Phong Nha — home to the world's largest cave system, jungle river treks, and a Dark Cave you zip-line into.</p>
+          <div class="pills">
+            <span class="pill pill-j">🌿 Cat Tien</span>
+            <span class="pill pill-b">🏖️ Nha Trang</span>
+            <span class="pill pill-b">🏖️ Quy Nhon</span>
+            <span class="pill pill-b">🏖️ Hoi An</span>
+            <span class="pill pill-c">🕳️ Phong Nha</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESTINATIONS -->
+<section class="section dests">
+  <div class="container">
+    <p class="label">The Destinations</p>
+    <h2 class="h2">Five Places Worth the Journey</h2>
+
+    <div class="dest-list">
+
+      <!-- CAT TIEN -->
+      <div class="dest">
+        <div class="photos">
+          <img class="photo-main" src="https://images.squarespace-cdn.com/content/v1/657b302ad0d11e71b22b40c3/3d7306b3-73d7-4b39-aebe-cbbd67d4bd8a/CatTienVietnam_Elephant2.jpeg" alt="Cat Tien National Park elephant">
+          <img class="photo-accent" src="https://images.squarespace-cdn.com/content/v1/657b302ad0d11e71b22b40c3/1719708585619-5SLZV9BDFDQE19E91ICX/CatTienVietnamB.jpeg" alt="Cat Tien jungle canopy">
+        </div>
+        <div>
+          <div class="dest-env env-j">🌿 Jungle</div>
+          <h3 class="dest-name">Cat Tien<br>National Park</h3>
+          <p class="dest-region">Lam Dong Province · Nights 2–3</p>
+          <p class="dest-desc">Vietnam's most celebrated lowland rainforest, 3 hours from Saigon. In 2025 it received four international ecotourism awards — the only Vietnamese park to do so. This is where the gibbons are.</p>
+          <div class="bullets">
+            <div class="bullet"><div class="dot"></div><span>Dawn gibbon tracking — yellow-cheeked crested gibbons, critically endangered</span></div>
+            <div class="bullet"><div class="dot"></div><span>Endangered Primate Rescue Centre, Crocodile Lake boat trip</span></div>
+            <div class="bullet"><div class="dot"></div><span>Night safari jeep tour — the jungle comes alive after dark</span></div>
+          </div>
+          <div class="facts">
+            <div class="fact"><span class="fact-label">Getting There</span><span class="fact-val">3 hr car from HCMC</span></div>
+            <div class="fact"><span class="fact-label">Stay</span><span class="fact-val">2 nights</span></div>
+            <div class="fact"><span class="fact-label">Night Safari</span><span class="fact-val">~$10 pp</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NHA TRANG -->
+      <div class="dest flip">
+        <div class="photos">
+          <img class="photo-main" src="https://www.agoda.com/wp-content/uploads/2024/08/Nha-Trang.jpg" alt="Nha Trang beach Vietnam clear water">
+          <img class="photo-accent" src="https://vietnam.travel/sites/default/files/inline-images/things%20to%20do%20in%20nha%20trang-5.jpg" alt="Nha Trang coast Vietnam">
+        </div>
+        <div>
+          <div class="dest-env env-b">🏖️ Beach</div>
+          <h3 class="dest-name">Nha Trang</h3>
+          <p class="dest-region">Khanh Hoa Province · Nights 4–5</p>
+          <p class="dest-desc">Vietnam's diving capital — and arguably its best July beach destination. Mountains surrounding the bay block the monsoon so completely that Nha Trang sees less than 10mm of rain the entire month.</p>
+          <div class="bullets">
+            <div class="bullet"><div class="dot"></div><span>Hon Mun island dive or snorkel — Vietnam's best accessible coral reef</span></div>
+            <div class="bullet"><div class="dot"></div><span>Doc Let beach — 18km of white sand, 30 min north, almost no one there</span></div>
+            <div class="bullet"><div class="dot"></div><span>Fresh seafood straight from the fishing boats at Dam Market</span></div>
+          </div>
+          <div class="facts">
+            <div class="fact"><span class="fact-label">Getting There</span><span class="fact-val">1 hr flight from HCMC</span></div>
+            <div class="fact"><span class="fact-label">Stay</span><span class="fact-val">2 nights</span></div>
+            <div class="fact"><span class="fact-label">Dive Trip</span><span class="fact-val">~$25–35 pp</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUY NHON -->
+      <div class="dest">
+        <div class="photos">
+          <img class="photo-main" src="https://static.vinwonders.com/production/Ky-Co-Beach-banner.jpg" alt="Ky Co beach turquoise water Vietnam">
+          <img class="photo-accent" src="https://d3pa5s1toq8zys.cloudfront.net/explore/wp-content/uploads/2025/02/Ky-Co-Beach-2.jpg" alt="Quy Nhon Ky Co beach aerial">
+        </div>
+        <div>
+          <div class="dest-env env-b">🏖️ Beach</div>
+          <h3 class="dest-name">Quy Nhon<br>&amp; Ky Co Beach</h3>
+          <p class="dest-region">Binh Dinh Province · Nights 6–8</p>
+          <p class="dest-desc">TripAdvisor's 4th most trending destination on earth for 2026 — and still blissfully uncrowded. Ky Co beach is accessible only by boat: turquoise water, limestone cliffs, zero development. The window won't stay open long.</p>
+          <div class="bullets">
+            <div class="bullet"><div class="dot"></div><span>Ky Co — boat-access only, limestone cliffs, impossibly clear water</span></div>
+            <div class="bullet"><div class="dot"></div><span>Bai Xep fishing village — photographers' paradise at dawn</span></div>
+            <div class="bullet"><div class="dot"></div><span>800-year-old Cham towers at Duong Long, barely visited</span></div>
+          </div>
+          <div class="facts">
+            <div class="fact"><span class="fact-label">Getting There</span><span class="fact-val">3 hr bus from Nha Trang</span></div>
+            <div class="fact"><span class="fact-label">Stay</span><span class="fact-val">3 nights</span></div>
+            <div class="fact"><span class="fact-label">Ky Co Boat</span><span class="fact-val">~$5 return</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HOI AN -->
+      <div class="dest flip">
+        <div class="photos">
+          <img class="photo-main" src="https://www.indochinavoyages.com/wp-content/uploads/2019/09/hoi_an_lanterns_2.jpg" alt="Hoi An ancient town lanterns Vietnam">
+          <img class="photo-accent" src="https://beantowntraveller.com/wp-content/uploads/2024/02/IMG_6836-1470x680.jpeg" alt="An Bang beach Hoi An">
+        </div>
+        <div>
+          <div class="dest-env env-b">🏖️ Beach + Town</div>
+          <h3 class="dest-name">Hoi An &amp;<br>An Bang Beach</h3>
+          <p class="dest-region">Quang Nam Province · Nights 9–10</p>
+          <p class="dest-desc">The UNESCO Ancient Town is still magnificent — visit at dawn or after 6pm to dodge the crowds. The real base is An Bang Beach: 10 minutes by bike, quieter than My Khe, with good restaurants right on the sand. A perfect way to end a trip.</p>
+          <div class="bullets">
+            <div class="bullet"><div class="dot"></div><span>An Bang — the calmer, less touristy beach alternative to My Khe</span></div>
+            <div class="bullet"><div class="dot"></div><span>Ancient Town by bike at dawn — lanterns, canals, nobody around yet</span></div>
+            <div class="bullet"><div class="dot"></div><span>Cao Lau noodles and White Rose dumplings — dishes unique to Hoi An</span></div>
+          </div>
+          <div class="facts">
+            <div class="fact"><span class="fact-label">Getting There</span><span class="fact-val">3.5 hr bus from Quy Nhon</span></div>
+            <div class="fact"><span class="fact-label">Stay</span><span class="fact-val">2 nights (A) · 1 night (B)</span></div>
+            <div class="fact"><span class="fact-label">Bike Hire</span><span class="fact-val">$2/day</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHONG NHA -->
+      <div class="dest">
+        <div class="photos">
+          <img class="photo-main" src="https://cdn.audleytravel.com/4209/3006/79/15977771-phong-nha-cave.jpg" alt="Phong Nha cave Vietnam">
+          <img class="photo-accent" src="https://media.worldnomads.com/Explore/vietnam/tents-and-small-people-in-a-cave-vietnam-parinazbilimoria.jpg" alt="Hang En cave camping Phong Nha">
+        </div>
+        <div>
+          <div class="dest-env env-c">🕳️ Caves + Jungle <span class="only-b">Option B only</span></div>
+          <h3 class="dest-name">Phong Nha<br>&amp; Hang En</h3>
+          <p class="dest-region">Quang Binh Province · Night 10–11</p>
+          <p class="dest-desc">UNESCO World Heritage karst — home to Son Doong, the world's largest cave. Son Doong itself is booked through 2027, but Hang En (3rd largest, bookable) lets you camp overnight inside the cave beside a river. Nothing else in Southeast Asia compares.</p>
+          <div class="bullets">
+            <div class="bullet"><div class="dot"></div><span>Dark Cave — zip-line into the entrance, then swim and kayak through it</span></div>
+            <div class="bullet"><div class="dot"></div><span>Hang En overnight — camp inside a cathedral cave beside an underground river</span></div>
+            <div class="bullet"><div class="dot"></div><span>Paradise Cave — 31km long, towering stalactite chambers</span></div>
+          </div>
+          <div class="facts">
+            <div class="fact"><span class="fact-label">Getting There</span><span class="fact-val">3.5 hr bus from Hoi An</span></div>
+            <div class="fact"><span class="fact-label">Stay</span><span class="fact-val">1–2 nights</span></div>
+            <div class="fact"><span class="fact-label">Dark Cave</span><span class="fact-val">~$20 pp</span></div>
+            <div class="fact"><span class="fact-label">Hang En Trek</span><span class="fact-val">~$200 pp</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ITINERARY -->
+<section class="section itin-section">
+  <div class="container">
+    <p class="label">Day by Day</p>
+    <h2 class="h2">The Full Schedule</h2>
+    <p class="lead">Both options follow the same backbone. Option B swaps Hoi An's second night for Phong Nha, adding one more night total.</p>
+
+    <div class="itin-block">
+      <p class="itin-block-label">Option A · 10 Nights</p>
+      <div class="itin-grid">
+        <div class="iday">
+          <div class="iday-n">Night 1</div>
+          <div class="iday-place">Ho Chi Minh City</div>
+          <div class="iday-type"><span class="idot d-t"></span>Arrival</div>
+          <div class="iday-notes">Land, sleep near airport. Early start next day.</div>
+        </div>
+        <div class="iday">
+          <div class="iday-n">Nights 2–3</div>
+          <div class="iday-place">Cat Tien</div>
+          <div class="iday-type"><span class="idot d-j"></span>Jungle</div>
+          <div class="iday-notes">3 hr car north. Gibbons at dawn. Night safari.</div>
+        </div>
+        <div class="iday">
+          <div class="iday-n">Day 4 · Transit</div>
+          <div class="iday-place">→ Nha Trang</div>
+          <div class="iday-type"><span class="idot d-t"></span>Travel Day</div>
+          <div class="iday-notes">Car to HCMC (3 hrs), fly Nha Trang (1 hr).</div>
+        </div>
+        <div class="iday">
+          <div class="iday-n">Nights 4–5</div>
+          <div class="iday-place">Nha Trang</div>
+          <div class="iday-type"><span class="idot d-b"></span>Beach</div>
+          <div class="iday-notes">Dive Hon Mun. Doc Let beach day.</div>
+        </div>
+        <div class="iday">
+          <div class="iday-n">Nights 6–8</div>
+          <div class="iday-place">Quy Nhon</div>
+          <div class="iday-type"><span class="idot d-b"></span>Beach</div>
+          <div class="iday-notes">3 hr bus. Ky Co full day. Bai Xep village.</div>
+        </div>
+        <div class="iday">
+          <div class="iday-n">Nights 9–10</div>
+          <div class="iday-place">Hoi An</div>
+          <div class="iday-type"><span class="idot d-b"></span>Beach + Town</div>
+          <div class="iday-notes">An Bang beach. Old Town at dawn by bike.</div>
+        </div>
+        <div class="iday">
+          <div class="iday-n">Day 11</div>
+          <div class="iday-place">Fly Da Nang</div>
+          <div class="iday-type"><span class="idot d-t"></span>Home</div>
+          <div class="iday-notes">30 min Grab to Da Nang airport.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="itin-block">
+      <p class="itin-block-label">Option B · 11 Nights · Adds Phong Nha</p>
+      <div class="itin-grid">
+        <div class="iday">
+          <div class="iday-n">Night 1</div>
+          <div class="iday-place">Ho Chi Minh City</div>
+          <div class="iday-type"><span class="idot d-t"></span>Arrival</div>
+          <div class="iday-notes">Land, sleep near airport.</div>
+        </div>
+        <div class="iday">
+          <div class="iday-n">Nights 2–3</div>
+          <div class="iday-place">Cat Tien</div>
+          <div class="iday-type"><span class="idot d-j"></span>Jungle</div>
+          <div class="iday-notes">Gibbons, night safari, primate centre.</div>
+        </div>
+        <div class="iday">
+          <div class="iday-n">Day 4 · Transit</div>
+          <div class="iday-place">→ Nha Trang</div>
+          <div class="iday-type"><span class="idot d-t"></span>Travel Day</div>
+          <div class="iday-notes">Car to HCMC, fly Nha Trang.</div>
+        </div>
+        <div class="iday">
+          <div class="iday-n">Nights 4–5</div>
+          <div class="iday-place">Nha Trang</div>
+          <div class="iday-type"><span class="idot d-b"></span>Beach</div>
+          <div class="iday-notes">Diving + beach day.</div>
+        </div>
+        <div class="iday">
+          <div class="iday-n">Nights 6–8</div>
+          <div class="iday-place">Quy Nhon</div>
+          <div class="iday-type"><span class="idot d-b"></span>Beach</div>
+          <div class="iday-notes">Ky Co boat. Bai Xep. Slow days.</div>
+        </div>
+        <div class="iday">
+          <div class="iday-n">Night 9</div>
+          <div class="iday-place">Hoi An</div>
+          <div class="iday-type"><span class="idot d-b"></span>Beach + Town</div>
+          <div class="iday-notes">An Bang beach. Old Town evening.</div>
+        </div>
+        <div class="iday">
+          <div class="iday-n">Nights 10–11</div>
+          <div class="iday-place">Phong Nha</div>
+          <div class="iday-type"><span class="idot d-c"></span>Caves</div>
+          <div class="iday-notes">Dark Cave day. Hang En overnight option.</div>
+        </div>
+        <div class="iday">
+          <div class="iday-n">Day 12</div>
+          <div class="iday-place">Fly Da Nang</div>
+          <div class="iday-type"><span class="idot d-t"></span>Home</div>
+          <div class="iday-notes">Bus back to Da Nang (3.5 hrs). Fly home.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSIT -->
+<section class="section transit-section">
+  <div class="container">
+    <p class="label">Getting Around</p>
+    <h2 class="h2">Transit at a Glance</h2>
+    <p class="lead">Every leg is under 4 hours. No overnight buses required unless you want them.</p>
+    <table class="transit-table">
+      <thead>
+        <tr><th>Leg</th><th>How</th><th>Time</th><th>Approx. Cost</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>HCMC → Cat Tien</strong></td><td>Private car or van (pre-book)</td><td>3 hrs</td><td><span class="cost">$50–60 shared</span></td></tr>
+        <tr><td><strong>Cat Tien → Nha Trang</strong></td><td>Car to HCMC + domestic flight</td><td>~4 hrs total</td><td><span class="cost">$30–45 flight</span></td></tr>
+        <tr><td><strong>Nha Trang → Quy Nhon</strong></td><td>Open bus or sleeper bus</td><td>3 hrs</td><td><span class="cost">$6–10</span></td></tr>
+        <tr><td><strong>Quy Nhon → Hoi An</strong></td><td>Open bus or sleeper bus</td><td>3.5 hrs</td><td><span class="cost">$8–12</span></td></tr>
+        <tr><td><strong>Hoi An → Phong Nha</strong> <em style="color:#888">(B only)</em></td><td>Sleeper bus</td><td>3.5 hrs</td><td><span class="cost">$10–15</span></td></tr>
+        <tr><td><strong>Phong Nha → Da Nang</strong> <em style="color:#888">(B only)</em></td><td>Bus</td><td>3.5 hrs</td><td><span class="cost">$8–12</span></td></tr>
+        <tr><td><strong>Within cities</strong></td><td>Grab (Vietnam's Uber)</td><td>—</td><td><span class="cost">$1–5 per ride</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- BOOK EARLY -->
+<section class="section book-section">
+  <div class="container">
+    <p class="label" style="text-align:center">Before You Go</p>
+    <h2 class="h2" style="text-align:center">Book These in Advance</h2>
+    <p class="lead">Most of this trip can be arranged on arrival. These four things can't.</p>
+    <div class="book-grid">
+      <div class="book-card">
+        <div class="book-urg">⚡ Book Early</div>
+        <div class="book-item">Cat Tien Eco-Lodge</div>
+        <div class="book-why">Limited rooms inside the park. Night safari slots fill fast, especially on weekends.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-urg">⚡ Book Early</div>
+        <div class="book-item">Flights — HCMC to Nha Trang</div>
+        <div class="book-why">July is peak domestic season. Vietjet and Vietnam Airlines prices spike close to departure.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-urg">⚡ Book Very Early</div>
+        <div class="book-item">Hang En Cave Trek</div>
+        <div class="book-why">Oxalis Adventure manages all Phong Nha permits. Limited slots — book 3–4 months ahead minimum.</div>
+      </div>
+      <div class="book-card">
+        <div class="book-urg">ℹ️ Worth Knowing</div>
+        <div class="book-item">Son Doong Cave</div>
+        <div class="book-why">The world's largest cave is fully booked through 2027. Only 1,000 permits per year exist. Hang En is the comparable alternative.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Vietnam · July 2026</span> &nbsp;·&nbsp; Prepared March 2026 &nbsp;·&nbsp; All prices in USD, estimates only
+</footer>
+
+</body>
+</html>
